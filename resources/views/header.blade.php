@@ -1,6 +1,13 @@
 <?php
 use App\Http\Controllers\ProductController;
-$total = ProductController::cartItem();
+$total=0;
+//to check if an user logged in or not,if the add to cart
+//values shows only if the user is logged in if not there shows 0
+if(Session::has('user'))
+{
+    $total = ProductController::cartItem();
+}
+
 ?>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -12,7 +19,7 @@ $total = ProductController::cartItem();
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Brand</a>
+        <a class="navbar-brand" href="/">E-comm</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -30,7 +37,14 @@ $total = ProductController::cartItem();
         </form>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#">Cart({{$total}})</a></li>
+          @if(Session::has('user'))
+          <li><a href="#">{{Session::get('user')['name']}}</a></li>
+          <li><a href="/logout">Logout</a></li>
+          @else
+          <li><a href="/login">Login</a> </li>
+          @endif
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
+
